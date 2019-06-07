@@ -22,10 +22,6 @@ export default class List extends React.Component {
             editUser: null,
         };
     }
-
-    upperFirstLetter(name) {
-        return name.split(' ').map((slice) =>  slice.charAt(0).toUpperCase() + slice.slice(1) + " " );
-    }
     
     componentDidMount() {
         this.getUsers();
@@ -53,7 +49,6 @@ export default class List extends React.Component {
                     pagination: res.links,
                     meta: res.meta 
                 });
-                console.log(res);
             })
             .catch(err => console.log(err));
     }
@@ -67,15 +62,16 @@ export default class List extends React.Component {
     }
 
     setEditUser = (event, user) => {
-        console.log('editou');
-        this.setState({ editUser: user })
+        this.setState({ editUser: user });
+        
+        document.getElementById('user-form').scrollIntoView({ behavior: 'smooth' });
     }
 
     render() {
-
+    
         return (
 
-            <div>
+            <div className="container">
                 <div className="card" style={{ marginTop: 25 }}>
                     <h1>Usuários</h1>
                     
@@ -126,7 +122,7 @@ export default class List extends React.Component {
                                 <ul className="pagination">
                                     <li className="page-item disabled">
                                         <button className="page-link" ><FaArrowLeft/></button>
-                                    </li>                              
+                                    </li>
                                     <li className="page-item active"><button className="page-link"  onClick={(evt) => this.handlePageClick(evt, 1)}>1</button></li>            
                                     <li className="page-item">
                                         <button className="page-link" onClick={(evt) => this.handlePageClick(evt, 2)}>2 <span className="sr-only">(current)</span></button>
@@ -139,12 +135,11 @@ export default class List extends React.Component {
                             </nav>
                         </div>
 
-                        <button className="btn btn-large btn-dark" onClick={this.reloadComponent.bind(this)}>Atualizar</button>
                     </div>
                 )}
 
                 </div>
-                <Form  user={this.state.editUser || null} update={this.reloadComponent.bind(this)} ></Form>
+                <Form  user={this.state.editUser} reloadList={this.reloadComponent.bind(this)} ></Form>
             </div>
         );
     }
