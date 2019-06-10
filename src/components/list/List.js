@@ -3,7 +3,8 @@ import UserService from '../form/service/UserService.js';
 import { FaSearch } from 'react-icons/fa';
 import Loader from '../loader/Loader.js';
 import Form from '../../components/form/Form';
-import { FaArrowRight, FaArrowLeft, FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
+import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
+import Pagination from '../pagination/Pagination.js';
 
 export default class List extends React.Component {
     users = [];
@@ -21,6 +22,8 @@ export default class List extends React.Component {
             profileCombo: [],
             editUser: null,
         };
+
+        this.reloadComponent = this.reloadComponent.bind(this);
     }
     
     componentDidMount() {
@@ -116,30 +119,12 @@ export default class List extends React.Component {
                                 }
                             </tbody>
                         </table>
-
-                        <div>
-                            <nav style={{ display: 'flex', justifyContent: 'center'}} className="" aria-label="...">
-                                <ul className="pagination">
-                                    <li className="page-item disabled">
-                                        <button className="page-link" ><FaArrowLeft/></button>
-                                    </li>
-                                    <li className="page-item active"><button className="page-link"  onClick={(evt) => this.handlePageClick(evt, 1)}>1</button></li>            
-                                    <li className="page-item">
-                                        <button className="page-link" onClick={(evt) => this.handlePageClick(evt, 2)}>2 <span className="sr-only">(current)</span></button>
-                                    </li>
-                                    <li className="page-item"><button className="page-link" onClick={(evt) => this.handlePageClick(evt, 3)}>3</button></li>
-                                    <li className="page-item">
-                                        <button className="page-link"><FaArrowRight/></button>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-
+                        
                     </div>
                 )}
 
                 </div>
-                <Form  user={this.state.editUser} reloadList={this.reloadComponent.bind(this)} ></Form>
+                <Form  user={this.state.editUser} reloadList={this.reloadComponent} ></Form>
             </div>
         );
     }
